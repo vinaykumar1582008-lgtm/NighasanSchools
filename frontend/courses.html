@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f2f2f2;
+}
+
+.header{
+    background:#0a7cff;
+    color:white;
+    text-align:center;
+    padding:18px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+#courses{
+    padding:15px;
+}
+
+.card{
+    background:white;
+    margin-bottom:15px;
+    padding:15px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#0a7cff;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+📚 Courses
+</div>
+
+<div id="courses">
+Loading Courses...
+</div>
+
+<script>
+
+const API="http://127.0.0.1:8000";
+
+async function loadCourses(){
+
+try{
+
+let response=await fetch(API+"/courses");
+
+let data=await response.json();
+
+let html="";
+
+data.forEach(course=>{
+
+html+=`
+<div class="card">
+<h2>${course.title}</h2>
+<p>${course.description}</p>
+<p><b>Teacher:</b> ${course.teacher}</p>
+
+<button onclick="alert('Video page baad me banayenge')">
+Open Course
+</button>
+
+</div>
+`;
+
+});
+
+document.getElement
