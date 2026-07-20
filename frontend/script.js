@@ -1,44 +1,42 @@
-const API = "http://127.0.0.1:8000";
 
-async function login(){
+const API = "https://nighasanschools.onrender.com";
+async function login() {
 
-let phone=document.getElementById("phone").value;
+    let phone = document.getElementById("phone").value;
 
-if(phone==""){
-document.getElementById("msg").innerHTML="मोबाइल नंबर दर्ज करें";
-return;
-}
+    if (phone == "") {
+        document.getElementById("msg").innerHTML = "मोबाइल नंबर दर्ज करें";
+        return;
+    }
 
-try{
+    try {
 
-let response=await fetch(API+"/students");
+        let response = await fetch(API + "/students");
+        alert(response.status);
+        let students = await response.json();
 
-let students=await response.json();
+        let user = students.find(s => s.phone === phone);
 
-let user=students.find(s=>s.phone===phone);
+        if (user) {
 
-if(user){
+            localStorage.setItem("student", JSON.stringify(user));
+            document.getElementById("msg").innerHTML = "✅ Login Successful";
 
-localStorage.setItem("student",JSON.stringify(user));
+            setTimeout(() => {
+                window.location = "home.html";
+            }, 1000);
 
-document.getElementById("msg").innerHTML="✅ Login Successful";
+        } else {
 
-setTimeout(()=>{
-window.location="home.html";
-},1000);
+            document.getElementById("msg").innerHTML = "❌ Student नहीं मिला";
 
-}else{
+        }
 
-document.getElementById("msg").innerHTML="❌ Student नहीं मिला";
+    } catch (e) {
 
-}
+        document.getElementById("msg").innerHTML = "❌ API Connect नहीं हो रही";
+        console.error(e);
+        alert(e);
 
-}catch(e){
-
-document.getElementById("msg").innerHTML="❌ API Connect नहीं हो रही";
-
-console.log(e);
-
-}
-
+    }
 }
