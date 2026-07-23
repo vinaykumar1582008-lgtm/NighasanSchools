@@ -88,3 +88,32 @@ def create_note(db: Session, note: schemas.NoteCreate):
 
 def get_notes(db: Session):
     return db.query(models.Note).all()
+
+def get_student_by_id(db: Session, student_id: int):
+    return db.query(models.Student).filter(
+        models.Student.id == student_id
+    ).first()
+
+def student_login(db: Session, phone: str):
+    return db.query(models.Student).filter(
+        models.Student.phone == phone
+    ).first()
+def update_student(db: Session, student_id: int, student: schemas.StudentUpdate):
+    db_student = db.query(models.Student).filter(
+        models.Student.id == student_id
+    ).first()
+
+    if not db_student:
+        return None
+
+    db_student.name = student.name
+    db_student.phone = student.phone
+
+    db.commit()
+    db.refresh(db_student)
+
+    return db_student
+def search_courses(db: Session, keyword: str):
+    return db.query(models.Course).filter(
+        models.Course.title.ilike(f"%{keyword}%")
+    ).all()

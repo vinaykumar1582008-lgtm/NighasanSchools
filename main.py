@@ -314,3 +314,135 @@ def api_status():
         "app": "Nighasan Schools",
         "version": "1.0"
     }
+
+@app.post("/login")
+def student_login(
+    student: schemas.StudentLogin,
+    db: Session = Depends(get_db)
+):
+    user = crud.student_login(db, student.phone)
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="Student not found"
+        )
+
+    token = create_access_token(
+        {
+            "sub": str(user.id),
+            "role": "student"
+        }
+    )
+
+    return {
+        "status": "success",
+        "access_token": token,
+        "token_type": "bearer",
+        "student": {
+            "id": user.id,
+            "name": user.name,
+            "phone": user.phone
+        }
+    }
+
+@app.get("/profile")
+def student_profile(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db)
+):
+    payload = verify_token(credentials.credentials)
+
+    if payload is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Token"
+        )
+
+    student_id = int(payload["sub"])
+
+    student = crud.get_student_by_id(db, student_id)
+
+    if not student:
+        raise HTTPException(
+            status_code=404,
+            detail="Student not found"
+        )
+
+    return student
+@app.put("/profile")
+def update_profile(
+    student: schemas.StudentUpdate,
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db)
+):
+    payload = verify_token(credentials.credentials)
+
+    if payload is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Token"
+        )
+
+    student_id = int(payload["sub"])
+
+    user = crud.update_student(db, student_id, student)
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="Student not found"
+        )
+
+    return {
+        "status": "success",
+        "message": "Profile updated successfully",
+        "student": user
+    }
+
+@app.get("/search")
+def search(
+    q: str,
+    db: Session = Depends(get_db)
+):
+    return crud.search_courses(db, q)
+
+@app.get("/dashboard")
+def student_dashboard(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db)
+):
+    payload = verify_token(credentials.credentials)
+
+    if payload is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Token"
+        )
+
+    if payload.get("role") != "student":
+        raise HTTPException(
+            status_code=403,
+            detail="Student access only"
+        )
+
+    student_id = int(payload["sub"])
+
+    student = crud.get_student_by_id(db, student_id)
+
+    if not student:
+        raise HTTPException(
+            status_code=404,
+            detail="Student not found"
+        )
+
+    courses = crud.get_courses(db)
+    notes = crud.get_notes(db)
+    videos = crud.get_videos(db)
+
+    return {
+        "student": student,
+        "total_courses": len(courses),
+        "total_notes": len(notes),
+        "total_videos": len(videos)
+    }

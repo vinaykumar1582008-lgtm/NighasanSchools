@@ -1,5 +1,5 @@
-
 const API = "https://nighasanschools.onrender.com";
+
 async function login() {
 
     let phone = document.getElementById("phone").value;
@@ -11,15 +11,23 @@ async function login() {
 
     try {
 
-        let response = await fetch(API + "/students");
-        alert(response.status);
-        let students = await response.json();
+        let response = await fetch(API + "/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                phone: phone
+            })
+        });
 
-        let user = students.find(s => s.phone === phone);
+        let data = await response.json();
 
-        if (user) {
+        if (response.ok) {
 
-            localStorage.setItem("student", JSON.stringify(user));
+            localStorage.setItem("token", data.access_token);
+            localStorage.setItem("student", JSON.stringify(data.student));
+
             document.getElementById("msg").innerHTML = "✅ Login Successful";
 
             setTimeout(() => {
@@ -28,15 +36,14 @@ async function login() {
 
         } else {
 
-            document.getElementById("msg").innerHTML = "❌ Student नहीं मिला";
+            document.getElementById("msg").innerHTML = "❌ " + data.detail;
 
         }
 
     } catch (e) {
 
         document.getElementById("msg").innerHTML = "❌ API Connect नहीं हो रही";
-        console.error(e);
-        alert(e);
+        console.log(e);
 
     }
 }
