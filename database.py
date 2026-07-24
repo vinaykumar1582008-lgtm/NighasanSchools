@@ -1,10 +1,19 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DATABASE_URL = "sqlite:///nighasan.db"
+DATABASE_URL = "postgresql://neondb_owner:npg_yjtd1HvP9wQh@ep-silent-credit-a7v65vz6-pooler.ap-southeast-2.aws.neon.tech/neondb?sslmode=require"
 
-engine = create_engine(DATABASE_URL)
 
-SessionLocal = sessionmaker(bind=engine)
+
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True
+)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
 
 Base = declarative_base()

@@ -5,3 +5,5 @@ python-multipart
 passlib[bcrypt]
 bcrypt
 python-jose[cryptography]
+psycopg2-binary
+firebase-admin

@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
 from database import Base
+from datetime import datetime
 
 
 class Student(Base):
@@ -8,6 +9,15 @@ class Student(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     phone = Column(String, unique=True, nullable=False)
+
+    firebase_uid = Column(String, unique=True, nullable=True)
+    device_id = Column(String, nullable=True)
+    session_token = Column(String, nullable=True)
+
+    is_active = Column(Boolean, default=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    last_login = Column(DateTime, default=datetime.utcnow)
 
 
 class Admin(Base):

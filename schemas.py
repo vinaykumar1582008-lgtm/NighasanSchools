@@ -75,3 +75,7 @@ class StudentLogin(BaseModel):
 class StudentUpdate(BaseModel):
     name: str
     phone: str
+
+class OTPLogin(BaseModel):
+    id_token: str
+    device_id: str
