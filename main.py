@@ -13,6 +13,7 @@ import crud
 
 from database import engine, SessionLocal
 from security import create_access_token, verify_token
+from firebase_config import auth
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -336,6 +337,56 @@ def student_login(
     )
 
     return {
+
+@app.post("/verify-otp")
+def verify_otp(
+    data: dict,
+    db: Session = Depends(get_db)
+):
+    try:
+        decoded = auth.verify_id_token(data["idToken"])
+
+        phone = decoded.get("phone_number")
+
+        if not phone:
+            raise HTTPException(
+                status_code=400,
+                detail="Phone number not found"
+            )
+
+        user = crud.student_login(db, phone)
+
+        if not user:
+            raise HTTPException(
+                status_code=404,
+                detail="Student not found"
+            )
+
+        token = create_access_token(
+            {
+                "sub": str(user.id),
+                "role": "student"
+            }
+        )
+
+        return {
+            "status": "success",
+            "access_token": token,
+            "token_type": "bearer",
+            "student": {
+                "id": user.id,
+                "name": user.name,
+                "phone": user.phone
+            }
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+
+
         "status": "success",
         "access_token": token,
         "token_type": "bearer",
