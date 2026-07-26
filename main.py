@@ -397,15 +397,7 @@ def verify_otp(
         )
 
 
-        "status": "success",
-        "access_token": token,
-        "token_type": "bearer",
-        "student": {
-            "id": user.id,
-            "name": user.name,
-            "phone": user.phone
-        }
-    }
+
 
 @app.get("/profile")
 def student_profile(
@@ -431,6 +423,7 @@ def student_profile(
         )
 
     return student
+
 @app.put("/profile")
 def update_profile(
     student: schemas.StudentUpdate,
