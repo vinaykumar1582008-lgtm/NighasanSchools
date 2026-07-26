@@ -336,7 +336,17 @@ def student_login(
         }
     )
 
+
     return {
+        "status": "success",
+        "access_token": token,
+        "token_type": "bearer",
+        "student": {
+            "id": user.id,
+            "name": user.name,
+            "phone": user.phone
+        }
+    }
 
 @app.post("/verify-otp")
 def verify_otp(
