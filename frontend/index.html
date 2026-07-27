@@ -6,6 +6,7 @@
 <title>Nighasan Schools</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial,sans-serif;
@@ -41,6 +42,7 @@ border:1px solid #ccc;
 button{
 width:95%;
 padding:15px;
+margin-top:10px;
 background:#0a7cff;
 color:white;
 font-size:20px;
@@ -48,14 +50,16 @@ border:none;
 border-radius:10px;
 }
 
-button:hover{
-background:#0066dd;
+#otpBox{
+display:none;
 }
 
 #msg{
 margin-top:15px;
 font-size:18px;
+font-weight:bold;
 }
+
 </style>
 
 </head>
@@ -72,16 +76,35 @@ Nighasan Schools
 
 <input
 id="phone"
-type="text"
+type="tel"
 placeholder="Enter Mobile Number">
 
-<button onclick="login()">
-Login
+<button onclick="sendOTP()">
+Send OTP
 </button>
+
+<div id="otpBox">
+
+<input
+id="otp"
+type="text"
+placeholder="Enter OTP">
+
+<button onclick="verifyOTP()">
+Verify OTP
+</button>
+
+</div>
+
+<div id="recaptcha-container"></div>
 
 <p id="msg"></p>
 
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script src="script.js"></script>
 

@@ -1,49 +1,56 @@
-const API = "https://nighasanschools.onrender.com";
+const firebaseConfig = {
+  apiKey: "AIzaSyCxZsSJw53sGHAAezLsv63G15QC9rWxIro",
+  authDomain: "nighasanschools-3287b.firebaseapp.com",
+  projectId: "nighasanschools-3287b",
+  storageBucket: "nighasanschools-3287b.firebasestorage.app",
+  messagingSenderId: "411459741463",
+  appId: "1:411459741463:web:e7a296a176219744453952"
+};
 
-async function login() {
+firebase.initializeApp(firebaseConfig);
 
-    let phone = document.getElementById("phone").value;
+const auth = firebase.auth();
 
-    if (phone == "") {
-        document.getElementById("msg").innerHTML = "मोबाइल नंबर दर्ज करें";
+window.onload = function () {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+        "recaptcha-container",
+        {
+            size: "normal"
+        }
+    );
+    recaptchaVerifier.render();
+};
+
+let confirmationResult = null;
+
+function sendOTP() {
+    const phone = document.getElementById("phone").value.trim();
+
+    if (phone.length != 10) {
+        document.getElementById("msg").innerHTML = "10 अंकों का मोबाइल नंबर दर्ज करें";
         return;
     }
 
-    try {
-
-        let response = await fetch(API + "/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                phone: phone
-            })
+    auth.signInWithPhoneNumber("+91" + phone, window.recaptchaVerifier)
+        .then((result) => {
+            confirmationResult = result;
+            document.getElementById("otpBox").style.display = "block";
+            document.getElementById("msg").innerHTML = "OTP भेज दिया गया";
+        })
+        .catch((error) => {
+            document.getElementById("msg").innerHTML = error.message;
         });
+}
 
-        let data = await response.json();
+function verifyOTP() {
+    const otp = document.getElementById("otp").value;
 
-        if (response.ok) {
-
-            localStorage.setItem("token", data.access_token);
-            localStorage.setItem("student", JSON.stringify(data.student));
-
-            document.getElementById("msg").innerHTML = "✅ Login Successful";
-
-            setTimeout(() => {
-                window.location = "home.html";
-            }, 1000);
-
-        } else {
-
-            document.getElementById("msg").innerHTML = "❌ " + data.detail;
-
-        }
-
-    } catch (e) {
-
-        document.getElementById("msg").innerHTML = "❌ API Connect नहीं हो रही";
-        console.log(e);
-
-    }
+    confirmationResult.confirm(otp)
+        .then((result) => {
+            document.getElementById("msg").innerHTML = "Login Successful";
+            console.log(result.user);
+        })
+        .catch((error) => {
+            document.getElementById("msg").innerHTML = "गलत OTP";
+        });
 }
