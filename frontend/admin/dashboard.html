@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div style="display:flex;height:100vh;">
+
+<div style="width:250px;background:#0a7cff;color:white;padding:20px;">
+
+<h2>Nighasan Schools</h2>
+<hr>
+
+<p onclick="showPage('dashboard')">📊 Dashboard</p>
+
+<p onclick="showPage('students')">👨‍🎓 Students</p>
+
+<p onclick="showPage('courses')">📚 Courses</p>
+
+<p onclick="showPage('notes')">📄 Notes</p>
+
+<p onclick="showPage('tests')">📝 Tests</p>
+
+<p onclick="showPage('admins')">👨‍💼 Admins</p>
+
+<p onclick="showPage('settings')">⚙️ Settings</p>
+
+<p onclick="logout()">🚪 Logout</p>
+
+</div>
+
+<div style="flex:1;padding:30px;">
+
+<h1 id="title">
+Dashboard
+</h1>
+
+<div id="content">
+
+<h2>Welcome Admin 👋</h2>
+
+<p>
+Select any option from the left menu.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>
