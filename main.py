@@ -95,8 +95,15 @@ def register(
     student: schemas.StudentCreate,
     db: Session = Depends(get_db)
 ):
-    return crud.create_student(db, student)
+    user = crud.create_student(db, student)
 
+    if user is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Mobile number already registered"
+        )
+
+    return user
 
 @app.get("/students")
 def get_students(
@@ -321,13 +328,16 @@ def student_login(
     student: schemas.StudentLogin,
     db: Session = Depends(get_db)
 ):
-    user = crud.student_login(db, student.phone)
 
+user = crud.student_login(
+    db,
+    student.phone,
+    student.password
+)
     if not user:
         raise HTTPException(
             status_code=404,
-            detail="Student not found"
-        )
+            detail="Invalid mobile number or password"        )
 
     token = create_access_token(
         {

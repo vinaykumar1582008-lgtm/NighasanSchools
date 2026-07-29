@@ -5,16 +5,27 @@ import schemas
 from security import hash_password, verify_password
 
 
+
 def create_student(db: Session, student: schemas.StudentCreate):
+
+    existing = db.query(models.Student).filter(
+        models.Student.phone == student.phone
+    ).first()
+
+    if existing:
+        return None
+
     db_student = models.Student(
         name=student.name,
-        phone=student.phone
+        phone=student.phone,
+        password=hash_password(student.password)
     )
+
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
-    return db_student
 
+    return db_student
 
 def get_students(db: Session):
     return db.query(models.Student).all()
@@ -94,10 +105,18 @@ def get_student_by_id(db: Session, student_id: int):
         models.Student.id == student_id
     ).first()
 
-def student_login(db: Session, phone: str):
-    return db.query(models.Student).filter(
+def student_login(db: Session, phone: str, password: str):
+    student = db.query(models.Student).filter(
         models.Student.phone == phone
     ).first()
+
+    if not student:
+        return None
+
+    if not verify_password(password, student.password):
+        return None
+
+    return student
 def update_student(db: Session, student_id: int, student: schemas.StudentUpdate):
     db_student = db.query(models.Student).filter(
         models.Student.id == student_id
