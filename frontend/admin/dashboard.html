@@ -1,60 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Admin Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<div style="display:flex;height:100vh;">
+<div class="sidebar">
 
-<div style="width:250px;background:#0a7cff;color:white;padding:20px;">
+<h2>Nighasan</h2>
 
-<h2>Nighasan Schools</h2>
-<hr>
+<a href="dashboard.html">🏠 Dashboard</a>
 
-<p onclick="showPage('dashboard')">📊 Dashboard</p>
+<a href="courses.html">📚 Courses</a>
 
-<p onclick="showPage('students')">👨‍🎓 Students</p>
+<a href="students.html">👨 Students</a>
 
-<p onclick="showPage('courses')">📚 Courses</p>
+<a href="notes.html">📄 Notes</a>
 
-<p onclick="showPage('notes')">📄 Notes</p>
+<a href="videos.html">🎥 Videos</a>
 
-<p onclick="showPage('tests')">📝 Tests</p>
+<a href="admins.html">👨‍💼 Admins</a>
 
-<p onclick="showPage('admins')">👨‍💼 Admins</p>
+<a href="settings.html">⚙ Settings</a>
 
-<p onclick="showPage('settings')">⚙️ Settings</p>
-
-<p onclick="logout()">🚪 Logout</p>
+<a href="#" onclick="logout()">🚪 Logout</a>
 
 </div>
 
-<div style="flex:1;padding:30px;">
+<div class="main">
 
-<h1 id="title">
-Dashboard
-</h1>
+<h1>Admin Dashboard</h1>
 
-<div id="content">
+<div class="cards">
 
-<h2>Welcome Admin 👋</h2>
+<div class="card">
 
-<p>
-Select any option from the left menu.
-</p>
+<h2 id="students">0</h2>
+
+<p>Total Students</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="courses">0</h2>
+
+<p>Total Courses</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="notes">0</h2>
+
+<p>Total Notes</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="videos">0</h2>
+
+<p>Total Videos</p>
 
 </div>
 
 </div>
+
+<br>
+
+<h2>Quick Actions</h2>
+
+<button onclick="location.href='courses.html'">
+➕ Add Course
+</button>
+
+<button onclick="location.href='students.html'">
+👨 Manage Students
+</button>
+
+<button onclick="location.href='notes.html'">
+📄 Manage Notes
+</button>
+
+<button onclick="location.href='videos.html'">
+🎥 Manage Videos
+</button>
 
 </div>
 
 <script src="dashboard.js"></script>
 
 </body>
+
 </html>
