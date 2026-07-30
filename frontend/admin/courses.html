@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Manage Courses</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>Nighasan</h2>
+
+<a href="dashboard.html">🏠 Dashboard</a>
+
+<a href="courses.html">📚 Courses</a>
+
+<a href="students.html">👨 Students</a>
+
+<a href="notes.html">📄 Notes</a>
+
+<a href="videos.html">🎥 Videos</a>
+
+<a href="admins.html">👨‍💼 Admins</a>
+
+<a href="settings.html">⚙ Settings</a>
+
+</div>
+
+<div class="main">
+
+<h1>Manage Courses</h1>
+
+<input
+id="title"
+placeholder="Course Name">
+
+<input
+id="teacher"
+placeholder="Teacher Name">
+
+<textarea
+id="description"
+placeholder="Course Description"></textarea>
+
+<button onclick="addCourse()">
+
+Save Course
+
+</button>
+
+<hr>
+
+<h2>All Courses</h2>
+
+<div id="courseList">
+
+Loading...
+
+</div>
+
+</div>
+
+<script src="courses.js"></script>
+
+</body>
+
+</html>
