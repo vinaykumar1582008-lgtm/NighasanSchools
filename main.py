@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Depends, UploadFile, File, HTTPException
+
+from routers import student
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,12 +15,12 @@ import crud
 
 from database import engine, SessionLocal
 from security import create_access_token, verify_token
-from firebase_config import auth
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Nighasan Schools API")
-
+app.include_router(student.router)
+	
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -329,15 +331,17 @@ def student_login(
     db: Session = Depends(get_db)
 ):
 
-user = crud.student_login(
-    db,
-    student.phone,
-    student.password
-)
+    user = crud.student_login(
+        db,
+        student.phone,
+        student.password
+    )
+
     if not user:
         raise HTTPException(
             status_code=404,
-            detail="Invalid mobile number or password"        )
+            detail="Invalid mobile number or password"
+        )
 
     token = create_access_token(
         {
@@ -345,7 +349,6 @@ user = crud.student_login(
             "role": "student"
         }
     )
-
 
     return {
         "status": "success",
