@@ -152,6 +152,27 @@ def login_admin(
         "access_token": token,
         "token_type": "bearer"
     }
+
+@app.post("/admin/reset-password")
+def reset_admin_password(
+    db: Session = Depends(get_db)
+):
+    admin = crud.update_admin_password(
+        db,
+        "vinay",
+        "Vinay123456Y"
+    )
+
+    if not admin:
+        raise HTTPException(
+            status_code=404,
+            detail="Admin not found"
+        )
+
+    return {
+        "message": "Password updated successfully"
+    }
+
 # ==========================
 # Courses
 # ==========================

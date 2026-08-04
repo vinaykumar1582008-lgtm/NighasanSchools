@@ -52,6 +52,20 @@ def admin_login(db: Session, username: str, password: str):
 
     return None
 
+def update_admin_password(db: Session, username: str, new_password: str):
+    admin = db.query(models.Admin).filter(
+        models.Admin.username == username
+    ).first()
+
+    if not admin:
+        return None
+
+    admin.password = hash_password(new_password)
+
+    db.commit()
+    db.refresh(admin)
+
+    return admin
 
 def create_course(db: Session, course: schemas.CourseCreate):
     db_course = models.Course(
