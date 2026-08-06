@@ -150,3 +150,9 @@ def search_courses(db: Session, keyword: str):
     return db.query(models.Course).filter(
         models.Course.title.ilike(f"%{keyword}%")
     ).all()
+
+
+def get_admin_by_username(db: Session, username: str):
+    return db.query(models.Admin).filter(
+        models.Admin.username == username
+    ).first()

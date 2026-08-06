@@ -8,7 +8,7 @@ if (!token) {
 
 async function loadDashboard() {
 
-    const response = await fetch(API + "/dashboard", {
+const response = await fetch(API + "/admin/dashboard", {
         headers: {
             "Authorization": "Bearer " + token
         }
