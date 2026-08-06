@@ -534,3 +534,18 @@ def student_dashboard(
         "total_notes": len(notes),
         "total_videos": len(videos)
     }
+
+@app.post("/chapters")
+def create_chapter(
+    chapter: schemas.ChapterCreate,
+    db: Session = Depends(get_db)
+):
+    return crud.create_chapter(db, chapter)
+
+
+@app.get("/chapters/{course_id}")
+def get_chapters(
+    course_id: int,
+    db: Session = Depends(get_db)
+):
+    return crud.get_chapters(db, course_id)

@@ -1,15 +1,10 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Manage Courses</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses</title>
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -19,57 +14,44 @@
 <h2>Nighasan</h2>
 
 <a href="dashboard.html">🏠 Dashboard</a>
-
 <a href="courses.html">📚 Courses</a>
-
 <a href="students.html">👨 Students</a>
-
 <a href="notes.html">📄 Notes</a>
-
 <a href="videos.html">🎥 Videos</a>
-
-<a href="admins.html">👨‍💼 Admins</a>
-
-<a href="settings.html">⚙ Settings</a>
 
 </div>
 
 <div class="main">
 
-<h1>Manage Courses</h1>
+<h1>📚 Courses</h1>
 
-<input
-id="title"
-placeholder="Course Name">
-
-<input
-id="teacher"
-placeholder="Teacher Name">
-
-<textarea
-id="description"
-placeholder="Course Description"></textarea>
-
-<button onclick="addCourse()">
-
-Save Course
-
+<button onclick="location.href='create-course.html'">
+➕ Create New Course
 </button>
 
-<hr>
+<br><br>
 
-<h2>All Courses</h2>
+<div class="cards">
 
-<div id="courseList">
+<div class="card">
 
-Loading...
+<img src="https://via.placeholder.com/250x140">
+
+<h3>Class 10 Science</h3>
+
+<p>Teacher : Vinay Maurya</p>
+
+<button>Open</button>
+
+<button>Edit</button>
+
+<button>Delete</button>
 
 </div>
 
 </div>
 
-<script src="courses.js"></script>
+</div>
 
 </body>
-
 </html>

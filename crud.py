@@ -68,10 +68,13 @@ def update_admin_password(db: Session, username: str, new_password: str):
     return admin
 
 def create_course(db: Session, course: schemas.CourseCreate):
-    db_course = models.Course(
-        title=course.title,
-        description=course.description,
-        teacher=course.teacher
+db_course = models.Course(
+    title=course.title,
+    description=course.description,
+    teacher=course.teacher,
+    thumbnail=course.thumbnail,
+    banner=course.banner
+)
     )
     db.add(db_course)
     db.commit()
@@ -156,3 +159,20 @@ def get_admin_by_username(db: Session, username: str):
     return db.query(models.Admin).filter(
         models.Admin.username == username
     ).first()
+
+def create_chapter(db: Session, chapter):
+    db_chapter = models.Chapter(
+        course_id=chapter.course_id,
+        title=chapter.title,
+        description=chapter.description
+    )
+    db.add(db_chapter)
+    db.commit()
+    db.refresh(db_chapter)
+    return db_chapter
+
+
+def get_chapters(db: Session, course_id: int):
+    return db.query(models.Chapter).filter(
+        models.Chapter.course_id == course_id
+    ).all()

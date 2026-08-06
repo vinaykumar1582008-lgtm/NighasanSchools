@@ -1,9 +1,8 @@
 from pydantic import BaseModel
-
 class StudentCreate(BaseModel):
     name: str
     phone: str
-
+    password: str
 class StudentResponse(BaseModel):
     id: int
     name: str
@@ -11,10 +10,14 @@ class StudentResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class StudentLogin(BaseModel):
+    phone: str
+    password: str
+
 class AdminCreate(BaseModel):
     username: str
     password: str
-
 class AdminResponse(BaseModel):
     id: int
     username: str
@@ -25,6 +28,8 @@ class CourseCreate(BaseModel):
     title: str
     description: str
     teacher: str
+    thumbnail: str | None = None
+    banner: str | None = None
 
 class CourseResponse(BaseModel):
     id: int
@@ -79,3 +84,8 @@ class StudentUpdate(BaseModel):
 class OTPLogin(BaseModel):
     id_token: str
     device_id: str
+
+class ChapterCreate(BaseModel):
+    course_id: int
+    title: str
+    description: str

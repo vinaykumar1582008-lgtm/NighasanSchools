@@ -17,3 +17,7 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
+
+import models
+
+Base.metadata.create_all(bind=engine)

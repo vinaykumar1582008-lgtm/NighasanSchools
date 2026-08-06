@@ -9,6 +9,7 @@ class Student(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     phone = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
 
     firebase_uid = Column(String, unique=True, nullable=True)
     device_id = Column(String, nullable=True)
@@ -35,7 +36,8 @@ class Course(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=False)
     teacher = Column(String, nullable=False)
-
+    thumbnail = Column(String, nullable=True)
+    banner = Column(String, nullable=True)
 
 class Video(Base):
     __tablename__ = "videos"
@@ -53,3 +55,11 @@ class Note(Base):
     course_id = Column(Integer, ForeignKey("courses.id"))
     title = Column(String, nullable=False)
     pdf_url = Column(String, nullable=False)
+
+class Chapter(Base):
+    __tablename__ = "chapters"
+
+    id = Column(Integer, primary_key=True, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"))
+    title = Column(String)
+    description = Column(String)
