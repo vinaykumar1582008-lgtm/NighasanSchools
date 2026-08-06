@@ -1,3 +1,12 @@
+document.getElementById("thumbnail").onchange = function(){
+
+    const file = this.files[0];
+
+    document.getElementById("preview").src =
+        URL.createObjectURL(file);
+
+}
+
 const API = "https://nighasanschools.onrender.com";
 
 async function createCourse() {

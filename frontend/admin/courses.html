@@ -1,32 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Courses</title>
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<div class="sidebar">
-
-<h2>Nighasan</h2>
-
-<a href="dashboard.html">🏠 Dashboard</a>
-<a href="courses.html">📚 Courses</a>
-<a href="students.html">👨 Students</a>
-<a href="notes.html">📄 Notes</a>
-<a href="videos.html">🎥 Videos</a>
-
-</div>
-
 <div class="main">
 
 <h1>📚 Courses</h1>
 
+<input
+type="text"
+placeholder="🔍 Search Course">
+
+<br><br>
+
 <button onclick="location.href='create-course.html'">
-➕ Create New Course
+➕ Create Course
 </button>
 
 <br><br>
@@ -35,13 +18,19 @@
 
 <div class="card">
 
-<img src="https://via.placeholder.com/250x140">
+<img
+src="https://via.placeholder.com/280x160"
+style="width:100%;border-radius:12px;">
 
-<h3>Class 10 Science</h3>
+<h2>Class 10 Science</h2>
 
-<p>Teacher : Vinay Maurya</p>
+<p>👨‍🏫 Vinay Maurya</p>
 
-<button>Open</button>
+<p>120 Students</p>
+
+<button onclick="location.href='course-details.html'">
+Open
+</button>
 
 <button>Edit</button>
 
@@ -52,6 +41,3 @@
 </div>
 
 </div>
-
-</body>
-</html>
