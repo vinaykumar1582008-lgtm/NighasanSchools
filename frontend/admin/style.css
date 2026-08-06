@@ -77,3 +77,77 @@ border:1px solid #ccc;
 border-radius:6px;
 box-sizing:border-box;
 }
+
+.cards{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.card{
+width:320px;
+background:#fff;
+padding:15px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card img{
+width:100%;
+border-radius:12px;
+}
+
+.card h2{
+margin-top:10px;
+}
+
+.card button{
+margin-top:10px;
+margin-right:8px;
+}
+
+@media(max-width:768px){
+
+.sidebar{
+width:70px;
+}
+
+.sidebar h2{
+display:none;
+}
+
+.sidebar a{
+padding:15px 8px;
+font-size:12px;
+text-align:center;
+}
+
+.main{
+margin-left:80px;
+padding:15px;
+}
+
+.cards{
+display:block;
+}
+
+.card{
+width:100%;
+margin-bottom:20px;
+}
+
+button{
+width:100%;
+margin-top:10px;
+}
+
+input{
+width:100%;
+}
+
+}
