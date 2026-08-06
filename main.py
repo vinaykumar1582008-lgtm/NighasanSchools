@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, UploadFile, File, HTTPException
 
-from routers import student
+from routers import student, dashboard
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,7 +20,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Nighasan Schools API")
 app.include_router(student.router)
-	
+app.include_router(dashboard.router)	
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
