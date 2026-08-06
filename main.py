@@ -5,6 +5,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from fastapi import UploadFile, File
 
 import shutil
 import os
@@ -39,6 +40,7 @@ security = HTTPBearer()
 # ==========================
 
 os.makedirs("uploads/videos", exist_ok=True)
+os.makedirs("uploads/notes", exist_ok=True)
 os.makedirs("uploads/notes", exist_ok=True)
 
 app.mount(
@@ -549,3 +551,29 @@ def get_chapters(
     db: Session = Depends(get_db)
 ):
     return crud.get_chapters(db, course_id)
+
+
+@app.post("/upload/thumbnail")
+def upload_thumbnail(file: UploadFile = File(...)):
+
+    path = f"uploads/thumbnails/{file.filename}"
+
+    with open(path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    return {
+        "url": f"/uploads/thumbnails/{file.filename}"
+    }
+
+
+@app.post("/upload/banner")
+def upload_banner(file: UploadFile = File(...)):
+
+    path = f"uploads/banners/{file.filename}"
+
+    with open(path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    return {
+        "url": f"/uploads/banners/{file.filename}"
+    }
