@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Create Course</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -13,28 +17,49 @@
 
 <h1>➕ Create New Course</h1>
 
-<input id="title" placeholder="Course Name">
+<input
+type="text"
+id="title"
+placeholder="Course Name">
 
-<input id="teacher" placeholder="Teacher Name">
+<input
+type="text"
+id="teacher"
+placeholder="Teacher Name">
 
-<textarea id="description" placeholder="Description"></textarea>
+<textarea
+id="description"
+placeholder="Course Description"></textarea>
 
-<input type="file" id="thumbnail">
+<h3>Course Thumbnail</h3>
+
+<input
+type="file"
+id="thumbnail"
+accept="image/*">
+
 <br><br>
 
 <img
 id="preview"
-width="300"
-style="border-radius:15px;">
+style="width:250px;border-radius:15px;display:none;">
 
-<input type="file" id="banner">
+<br><br>
+
+<h3>Course Banner</h3>
+
+<input
+type="file"
+id="banner"
+accept="image/*">
 
 <br><br>
 
 <img
 id="bannerPreview"
-width="100%"
-style="display:none;border-radius:15px;">
+style="width:100%;max-width:700px;border-radius:15px;display:none;">
+
+<br><br>
 
 <button onclick="createCourse()">
 Create Course
@@ -45,4 +70,5 @@ Create Course
 <script src="create-course.js"></script>
 
 </body>
+
 </html>
