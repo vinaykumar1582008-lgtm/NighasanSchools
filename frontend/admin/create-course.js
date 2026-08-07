@@ -1,11 +1,48 @@
 const API = "https://nighasanschools.onrender.com";
 
-document.getElementById("thumbnail").onchange = function () {
-    const file = this.files[0];
-    if (file) {
-        document.getElementById("preview").src = URL.createObjectURL(file);
+const thumbnailInput = document.getElementById("thumbnail");
+const bannerInput = document.getElementById("banner");
+
+if (thumbnailInput) {
+    thumbnailInput.onchange = function () {
+        const file = this.files[0];
+        if (file) {
+            const img = document.getElementById("preview");
+            img.src = URL.createObjectURL(file);
+            img.style.display = "block";
+        }
+    };
+}
+
+if (bannerInput) {
+    bannerInput.onchange = function () {
+        const file = this.files[0];
+        if (file) {
+            const img = document.getElementById("bannerPreview");
+            if (img) {
+                img.src = URL.createObjectURL(file);
+                img.style.display = "block";
+            }
+        }
+    };
+}
+
+async function uploadFile(file, endpoint) {
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(API + endpoint, {
+        method: "POST",
+        body: formData
+    });
+
+    if (!response.ok) {
+        throw new Error("Upload Failed");
     }
-};
+
+    return await response.json();
+}
 
 async function createCourse() {
 
@@ -15,105 +52,55 @@ async function createCourse() {
         const teacher = document.getElementById("teacher").value.trim();
         const description = document.getElementById("description").value.trim();
 
-        const thumbnail = document.getElementById("thumbnail").files[0];
-        const banner = document.getElementById("banner").files[0];
-
         if (!title || !teacher) {
             alert("Course Name aur Teacher Name bhariye");
             return;
         }
 
-        const token = localStorage.getItem("admin_token");
+        const thumbnail = thumbnailInput.files[0];
+        const banner = bannerInput.files[0];
 
         let thumbnailUrl = "";
         let bannerUrl = "";
 
         if (thumbnail) {
-
-            const form = new FormData();
-            form.append("file", thumbnail);
-
-            const upload = await fetch(API + "/upload/thumbnail", {
-                method: "POST",
-                body: form
-            });
-
-            const result = await upload.json();
-            thumbnailUrl = result.url;
+            const res = await uploadFile(thumbnail, "/upload/thumbnail");
+            thumbnailUrl = res.url;
         }
 
         if (banner) {
-
-            const form = new FormData();
-            form.append("file", banner);
-
-            const upload = await fetch(API + "/upload/banner", {
-                method: "POST",
-                body: form
-            });
-
-            const result = await upload.json();
-            bannerUrl = result.url;
+            const res = await uploadFile(banner, "/upload/banner");
+            bannerUrl = res.url;
         }
 
+        const token = localStorage.getItem("admin_token");
+
         const response = await fetch(API + "/courses", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + token
             },
-
             body: JSON.stringify({
-
-                title: title,
-                teacher: teacher,
-                description: description,
+                title,
+                teacher,
+                description,
                 thumbnail: thumbnailUrl,
                 banner: bannerUrl
-
             })
-
         });
 
         const data = await response.json();
 
         if (response.ok) {
-
             alert("Course Created Successfully");
-
             window.location.href = "courses.html";
-
         } else {
-
             alert(data.detail || "Course Create Failed");
-
         }
 
     } catch (err) {
-
         console.log(err);
-
-        alert("Error : " + err.message);
-
+        alert(err.message);
     }
-
 }
-
-
-document.getElementById("banner").onchange = function () {
-
-    const file = this.files[0];
-
-    if (file) {
-
-        const img = document.getElementById("bannerPreview");
-
-        img.src = URL.createObjectURL(file);
-
-        img.style.display = "block";
-
-    }
-
-};
