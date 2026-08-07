@@ -74,8 +74,6 @@ class AdminLogin(BaseModel):
     username: str
     password: str
 
-class StudentLogin(BaseModel):
-    phone: str
 
 class StudentUpdate(BaseModel):
     name: str
