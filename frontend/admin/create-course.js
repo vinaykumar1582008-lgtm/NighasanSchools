@@ -100,3 +100,20 @@ async function createCourse() {
     }
 
 }
+
+
+document.getElementById("banner").onchange = function () {
+
+    const file = this.files[0];
+
+    if (file) {
+
+        const img = document.getElementById("bannerPreview");
+
+        img.src = URL.createObjectURL(file);
+
+        img.style.display = "block";
+
+    }
+
+};
